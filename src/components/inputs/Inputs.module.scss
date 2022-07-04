@@ -1,0 +1,67 @@
+@import "./../../var.scss";
+.input {
+  position: relative;
+
+  input,
+  textarea {
+    resize: none;
+    display: block;
+    font-size: 1.2rem;
+    background: transparent;
+    padding: 10px 15px;
+    border: $dark 1px solid;
+    border-bottom: $secondary 1px solid;
+    width: 100%;
+    color: $secondary;
+    transition: 0.25s ease-in-out;
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+    &:focus-visible {
+      outline: none;
+    }
+    &:focus ~ label,
+    &.filled ~ label,
+    &:focus-visible ~ label {
+      font-size: 0.75rem;
+      top: -13%;
+      color: $thirdly;
+    }
+  }
+  textarea {
+    max-height: 4rem;
+    &:focus ~ label,
+    &.filled ~ label,
+    &:focus-visible ~ label {
+      top: -25%;
+    }
+  }
+  label {
+    transition: 0.25s ease-in-out;
+    position: absolute;
+    font-size: 1.2rem;
+    z-index: 3;
+    color: $secondary;
+    top: calc(50% - 1.2rem / 2);
+    left: 15px;
+  }
+}
+.submit {
+  transition: all 0.15s ease-in-out;
+  display: block;
+  text-transform: uppercase;
+  font-weight: 300;
+  width: 50%;
+  margin: 2rem auto 0 auto;
+  border: $secondary 1px solid;
+  padding: 5px 15px;
+  background: transparent;
+  color: $primary;
+  &:hover {
+    background: $secondary;
+    color: $dark;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+}
