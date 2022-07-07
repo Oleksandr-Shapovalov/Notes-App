@@ -35,6 +35,9 @@
     &:focus-visible {
       outline: none;
     }
+    &:active ~ label,
+    &:target ~ label,
+    &:focus-within ~ label,
     &:focus ~ label,
     &.filled ~ label,
     &:focus-visible ~ label,
@@ -50,6 +53,9 @@
   }
   textarea {
     max-height: 4rem;
+    &:active ~ label,
+    &:target ~ label,
+    &:focus-within ~ label,
     &:focus ~ label,
     &.filled ~ label,
     &:focus-visible ~ label,
