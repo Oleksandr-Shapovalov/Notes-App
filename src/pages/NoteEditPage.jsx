@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { currentDate } from "../addition/currentDate";
 import { useCallbackPrompt, useInput } from "../addition/customHooks";
-import BackBTN from "../backBTN/BackBTN";
-
-import style from "./../components/notes/Notes.module.scss";
 import { NoteHOC } from "../components/HOC/NoteHOC";
 import { updateNoteBD } from "../store/notes/async";
 import { ConfirmSaveChanges } from "../components/confirmPopUp/ConfirmSaveChanges";
 import { Loader } from "../components/loader/Loader";
+import BackBTN from "../components/backBTN/BackBTN";
+import style from "./../components/notes/Notes.module.scss";
 
 const NoteEditPage = ({
   navigate,
