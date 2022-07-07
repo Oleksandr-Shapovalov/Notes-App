@@ -1,9 +1,9 @@
 import React from "react";
-import { Loader } from "../loader/Loader";
-import { Note } from "../components/notes/Note";
+import { Loader } from "../components/loader/Loader";
+import Note from "../components/notes/Note";
 import style from "./../components/notes/Notes.module.scss";
-import { NoteHOC } from "../hocNote/NoteHOC";
-import { BackBTN } from "../backBTN/BackBTN";
+import BackBTN from "../backBTN/BackBTN";
+import { NoteHOC } from "../components/HOC/NoteHOC";
 
 const NoteItemPage = ({ navigate, isLoading, dispatch, chosenNote }) => {
   return (

@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { deleteNoteBD } from "../store/notes/async";
-import { toggleConfirmAC } from "../store/notes/notesActions";
+import { useTouchMove } from "../../addition/customHooks";
+import { deleteNoteBD } from "../../store/notes/async";
+import { toggleConfirmAC } from "../../store/notes/notesActions";
 import style from "./Confirm.module.scss";
 
-export const Confirm = () => {
+export default memo(() => {
+  const touch = useTouchMove();
   const { showConfirmPopUp, noteToRemove } = useSelector(
     (state) => state.notesReducer
   );
@@ -35,12 +37,17 @@ export const Confirm = () => {
           <h2>Do you want to remove:</h2>
           <p>"{noteToRemove.title}" ?</p>
           <div className={style.buttons}>
-            <button onClick={removeNote} className={style.delete}>
+            <button
+              {...touch.bind}
+              onClick={removeNote}
+              className={`${style.do} ${touch.touched ? style.hover : ""}`}
+            >
               Delete
             </button>
             <button
+              {...touch.bind}
               onClick={() => dispatch(toggleConfirmAC(false))}
-              className={style.cancel}
+              className={`${style.cancel} ${touch.touched ? style.hover : ""}`}
             >
               Cancel
             </button>
@@ -49,4 +56,4 @@ export const Confirm = () => {
       </div>
     </CSSTransition>
   );
-};
+});

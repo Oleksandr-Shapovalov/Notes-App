@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { currentDate } from "../addition/currentDate";
-import { useInput } from "../addition/customHooks";
-import { BackBTN } from "../backBTN/BackBTN";
-import { NoteHOC } from "../hocNote/NoteHOC";
-import { Loader } from "../loader/Loader";
-import { updateNoteBD } from "../store/notes/async";
+import { useCallbackPrompt, useInput } from "../addition/customHooks";
+import BackBTN from "../backBTN/BackBTN";
+
 import style from "./../components/notes/Notes.module.scss";
+import { NoteHOC } from "../components/HOC/NoteHOC";
+import { updateNoteBD } from "../store/notes/async";
+import { ConfirmSaveChanges } from "../components/confirmPopUp/ConfirmSaveChanges";
+import { Loader } from "../components/loader/Loader";
 
 const NoteEditPage = ({
   navigate,
@@ -13,12 +15,17 @@ const NoteEditPage = ({
   dispatch,
   chosenNote: { title, text, id, date },
 }) => {
-  const titleUI = useInput();
-  const textUI = useInput();
+  const [edited, setEdited] = useState(false);
+  const [showPrompt, confirmNavigation, cancelNavigation] =
+    useCallbackPrompt(edited);
+  const titleUI = useInput("", { isEmpty: true, maxLength: 100 });
+  const textUI = useInput("", { isEmpty: true });
   const titleEL = useRef(null);
   const textEL = useRef(null);
-  const [titleHeight, setTitleHeight] = useState(0);
-  const [textHeight, setTextHeight] = useState(0);
+  const [shake, setShake] = useState(false);
+  const titleErr = titleUI.textErr && titleUI.isDirty;
+  const textErr = textUI.textErr && textUI.isDirty;
+  const disabled = titleUI.textErr || textUI.textErr;
 
   useEffect(() => {
     titleUI.set(title);
@@ -26,51 +33,75 @@ const NoteEditPage = ({
   useEffect(() => {
     textUI.set(text);
   }, [text]);
-  useEffect(() => {
-    setTitleHeight(
-      titleEL.current ? titleEL.current.scrollHeight : titleHeight
-    );
-    setTextHeight(textEL.current ? textEL.current.scrollHeight : textHeight);
-  });
 
-  const updateNoteClick = (e) =>
-    dispatch(
-      updateNoteBD(
-        {
-          title: titleUI.value,
-          text: textUI.value,
-          id,
-          edited: currentDate(),
-          date,
-        },
-        e
-      )
-    );
-  console.log(titleHeight);
+  useEffect(() => {
+    resize(titleEL.current);
+  }, [titleUI.value, isLoading]);
+  useEffect(() => {
+    resize(textEL.current);
+  }, [textUI.value, isLoading]);
+
+  const updateNoteClick = (e) => {
+    e.preventDefault();
+    if (disabled) {
+      setShake(true);
+      setTimeout(() => {
+        setShake(false);
+      }, 1000);
+    } else {
+      dispatch(
+        updateNoteBD(
+          {
+            title: titleUI.value.trim(),
+            text: textUI.value.trim(),
+            id,
+            edited: currentDate(),
+            date,
+          },
+          e
+        )
+      );
+      setEdited(false);
+    }
+  };
+
+  const resize = (e) => {
+    if (e) {
+      e.style.height = "";
+      e.style.height = e.scrollHeight + "px";
+    }
+  };
+  const handleChange = (e) => {
+    setEdited(true);
+  };
   return (
     <div className={style.noteCardPage}>
+      <ConfirmSaveChanges
+        visibility={showPrompt}
+        confirmNavigation={confirmNavigation}
+        cancelNavigation={cancelNavigation}
+      />
       <BackBTN navigate={navigate} />
       {isLoading ? (
         <Loader toHeight={60} />
       ) : (
-        <form onSubmit={updateNoteClick} className={style.editing}>
+        <form onSubmit={(e) => updateNoteClick(e)} className={style.editing}>
           <textarea
             ref={titleEL}
-            spellCheck
-            style={{
-              height: titleHeight,
-            }}
             id="title"
             {...titleUI.bind}
+            onInput={handleChange}
+            className={`${titleErr ? style.err : ""}`}
           ></textarea>
           <textarea
+            className={`${textErr ? style.err : ""}`}
+            onInput={handleChange}
             ref={textEL}
-            style={{ height: textHeight }}
             id="text"
             {...textUI.bind}
-          ></textarea>{" "}
-          <button type="submit">
-            <i className="bi bi-clipboard2-check-fill"></i>
+          ></textarea>
+          <button className={`${shake ? "shake" : ""}`} type="submit">
+            <i className="bi bi-clipboard-check-fill"></i>
           </button>
         </form>
       )}

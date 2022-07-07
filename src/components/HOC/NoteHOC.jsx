@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchOneNoteFromBD } from "../store/notes/async.js";
+import { fetchOneNoteFromBD } from "../../store/notes/async";
 
 export const NoteHOC = (Component) => {
-  const ComponentUpdate = () => {
+  const ComponentUpdate = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
@@ -18,6 +18,7 @@ export const NoteHOC = (Component) => {
 
     return (
       <Component
+        props={props}
         dispatch={dispatch}
         chosenNote={chosenNote}
         isLoading={isLoading}

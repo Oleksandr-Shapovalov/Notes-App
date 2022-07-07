@@ -1,38 +1,59 @@
 @import "./../../var.scss";
+
 .input {
   position: relative;
-
+  p {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    position: absolute;
+    transform: translateY(115%);
+    bottom: 0;
+    left: 0;
+    color: $error;
+    font-size: 1rem;
+    font-weight: 300;
+    &.err {
+      opacity: 1;
+    }
+  }
   input,
   textarea {
+    transition: all 0.25s ease-in-out;
     resize: none;
     display: block;
     font-size: 1.2rem;
     background: transparent;
     padding: 10px 15px;
-    border: $dark 1px solid;
+    border: none;
     border-bottom: $secondary 1px solid;
     width: 100%;
     color: $secondary;
     transition: 0.25s ease-in-out;
     &:not(:last-child) {
-      margin-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
     }
     &:focus-visible {
       outline: none;
     }
     &:focus ~ label,
     &.filled ~ label,
-    &:focus-visible ~ label {
+    &:focus-visible ~ label,
+    &.filled ~ label {
       font-size: 0.75rem;
       top: -13%;
       color: $thirdly;
+    }
+    &.err {
+      color: $error;
+      border-bottom: $error 1px solid;
     }
   }
   textarea {
     max-height: 4rem;
     &:focus ~ label,
     &.filled ~ label,
-    &:focus-visible ~ label {
+    &:focus-visible ~ label,
+    &.filled ~ label {
       top: -25%;
     }
   }
@@ -44,6 +65,9 @@
     color: $secondary;
     top: calc(50% - 1.2rem / 2);
     left: 15px;
+    &.err {
+      color: $error !important;
+    }
   }
 }
 .submit {
@@ -57,11 +81,20 @@
   padding: 5px 15px;
   background: transparent;
   color: $primary;
-  &:hover {
+  &:hover,
+  &.hover {
     background: $secondary;
     color: $dark;
   }
   &:active {
     transform: scale(0.9);
+  }
+  &:active.err {
+    transform: scale(1);
+  }
+  &:hover.err,
+  &.hover.err {
+    background: transparent;
+    color: $primary;
   }
 }

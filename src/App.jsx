@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import NoteItemPage from "./pages/NoteItemPage";
 import NoteEditPage from "./pages/NoteEditPage";
-import { Confirm } from "./confirmPopUp/Confirm";
+import ConfirmDelete from "./components/confirmPopUp/ConfirmDelete.jsx";
 import { useDispatch } from "react-redux";
 import { toggleConfirmAC } from "./store/notes/notesActions";
+import ThemeToggle from "./components/themeToggle/ThemeToggle";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const App = () => {
   }, []);
   const closePopUP = (e) => {
     if (
+      document.querySelectorAll(".popup.active").length &&
       !e.target.classList.contains("popup_opener") &&
       !e.target.closest(".popup_opener")
     ) {
@@ -34,10 +36,12 @@ const App = () => {
       dispatch(toggleConfirmAC(false));
     }
   };
+
   return (
     <BrowserRouter>
       <div className="App">
-        <Confirm title={"title"} />
+        <ThemeToggle />
+        <ConfirmDelete />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/note/:id" element={<NoteItemPage />} />

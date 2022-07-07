@@ -1,17 +1,19 @@
-import React, { useRef } from "react";
+import React, { memo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTouchMove } from "../../addition/customHooks";
 import {
   setNoteToRemoveAC,
   toggleConfirmAC,
 } from "../../store/notes/notesActions";
 import style from "./Notes.module.scss";
 
-export const Note = ({ title, text, date, dispatch, id, edited }) => {
+export default memo(({ title, text, date, dispatch, id, edited }) => {
+  const touch = useTouchMove();
   const popUp = useRef(null);
+  const navigate = useNavigate();
   const showPopUp = () => {
     popUp.current.classList.add("active");
   };
-  const navigate = useNavigate();
   const goToItemNotePage = (e, id) => {
     if (
       !e.target.classList.contains("popup_opener") &&
@@ -29,7 +31,11 @@ export const Note = ({ title, text, date, dispatch, id, edited }) => {
     dispatch(toggleConfirmAC(true));
   };
   return (
-    <div onClick={(e) => goToItemNotePage(e, id)} className={style.noteCard}>
+    <div
+      {...touch.bind}
+      onClick={(e) => goToItemNotePage(e, id)}
+      className={`${style.noteCard} ${touch.touched ? style.hover : ""}`}
+    >
       <div onClick={showPopUp} className={`${style.options} popup_opener`}>
         <span></span>
         <span></span>
@@ -47,9 +53,9 @@ export const Note = ({ title, text, date, dispatch, id, edited }) => {
       <p className={style.text}>{text}</p>
       <div className={style.hr}></div>
       <div className={style.date}>
-        <span>{date}</span>{" "}
-        <span> {edited ? `last edited: ${edited}` : ""}</span>
+        <span>{" " + date}</span>
+        <span> {(edited ? `last edited: ${edited}` : "").trim()}</span>
       </div>
     </div>
   );
-};
+});

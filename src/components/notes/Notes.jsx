@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { fetchNotesFromBD } from "../../store/notes/async";
-import { Loader } from "./../../loader/Loader.jsx";
-import { Note } from "./Note";
+import { Loader } from "../loader/Loader.jsx";
+import Note from "./Note";
 import style from "./Notes.module.scss";
 
 export const Notes = () => {
@@ -17,7 +17,7 @@ export const Notes = () => {
   return (
     <div className={style.notes}>
       {isLoading ? (
-        <Loader toHeight={233} />
+        <Loader toHeight={290} />
       ) : notes.length ? (
         <TransitionGroup component={"div"} className={style.notes}>
           {notes.map((note) => (

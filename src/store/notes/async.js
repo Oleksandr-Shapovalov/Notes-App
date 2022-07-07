@@ -30,6 +30,7 @@ export const addNoteBD = (payload) => {
 
 export const deleteNoteBD = (payload, cb, e) => {
   e.stopPropagation();
+  e.preventDefault();
   return (dispatch) => {
     //  dispatch(loaderShowAC());
     axios
@@ -42,16 +43,17 @@ export const deleteNoteBD = (payload, cb, e) => {
     //.finally(() => dispatch(loaderHideAC()));
   };
 };
-export const updateNoteBD = (payload, e) => {
-  e.stopPropagation();
+export const updateNoteBD = (payload) => {
+  // e.preventDefault();
+
   return (dispatch) => {
-    //  dispatch(loaderShowAC());
+    dispatch(loaderShowAC());
 
     axios
       .put(`${URL}/notes/${payload.id}.json`, payload)
       .then(({ data }) => dispatch(updateNoteAC(data)))
-      .catch((err) => console.log(err));
-    //.finally(() => dispatch(loaderHideAC()));
+      .catch((err) => console.log(err))
+      .finally(() => dispatch(loaderHideAC()));
   };
 };
 export const fetchNotesFromBD = () => {

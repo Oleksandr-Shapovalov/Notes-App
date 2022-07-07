@@ -4,6 +4,7 @@
 .noteAnimation-enter-active {
   animation: noteElAnim 0.7s ease-in alternate-reverse;
 }
+/////////////////////////============
 .popupConfirmAnim-enter {
   transition: all 0.5s ease-out;
   transform: scale(0);
@@ -20,6 +21,9 @@
   opacity: 1;
 }
 
+/////////////////////////=============
+///
+/////////////////////////
 @keyframes noteElAnim {
   0% {
     opacity: 1;
@@ -34,6 +38,7 @@
     transform: translateX(-20%);
   }
 }
+/////////////////////////
 @keyframes containerAppearing {
   from {
     transform: scaleY(0);
@@ -46,6 +51,32 @@
     opacity: 1;
   }
 }
+//////////////////////////
+.shake {
+  animation-name: shake;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+/////////////////////////
 .loaderWrap {
   display: flex;
   align-items: center;
