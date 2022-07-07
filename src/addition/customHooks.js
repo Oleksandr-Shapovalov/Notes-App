@@ -14,14 +14,12 @@ import {
 //theme changer
 const isDarkTheme = window?.matchMedia("(prefers-color-scheme: dark)").matches;
 const defaultTheme = isDarkTheme ? "dark" : "light";
-console.log(defaultTheme);
 export const useTheme = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem("app-theme") || defaultTheme
   );
 
   useLayoutEffect(() => {
-    console.log(theme, 999999999);
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("app-theme", theme);
   }, [theme]);
