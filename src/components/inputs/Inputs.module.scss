@@ -35,12 +35,9 @@
     &:focus-visible {
       outline: none;
     }
-    &:active ~ label,
-    &:target ~ label,
-    &:focus-within ~ label,
+
     &:focus ~ label,
     &.filled ~ label,
-    &:focus-visible ~ label,
     &.filled ~ label {
       font-size: 0.75rem;
       top: -13%;
@@ -53,18 +50,15 @@
   }
   textarea {
     max-height: 4rem;
-    &:active ~ label,
-    &:target ~ label,
-    &:focus-within ~ label,
+
     &:focus ~ label,
     &.filled ~ label,
-    &:focus-visible ~ label,
     &.filled ~ label {
       top: -25%;
     }
   }
   label {
-    transition: 0.25s ease-in-out;
+    transition: all 0.3s ease-in-out;
     position: absolute;
     font-size: 1.2rem;
     z-index: 3;
