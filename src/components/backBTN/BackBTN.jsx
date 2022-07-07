@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import style from "./../components/notes/Notes.module.scss";
+import style from "./../notes/Notes.module.scss";
 export default memo(({ navigate }) => {
   return (
     <button className={style.backToAllNotes} onClick={() => navigate(`/`)}>
