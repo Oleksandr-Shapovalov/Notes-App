@@ -1,13 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useTouchMove } from "../../addition/customHooks";
 import style from "./Confirm.module.scss";
-export const ConfirmSaveChanges = ({
-  confirmNavigation,
-  cancelNavigation,
-  visibility,
-}) => {
+export default memo(({ confirmNavigation, cancelNavigation, visibility }) => {
   const touch = useTouchMove();
+  console.log("rerender");
   return (
     <CSSTransition
       in={visibility}
@@ -39,4 +36,4 @@ export const ConfirmSaveChanges = ({
       </div>
     </CSSTransition>
   );
-};
+});
