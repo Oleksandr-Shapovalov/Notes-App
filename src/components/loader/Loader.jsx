@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Loader = ({ toHeight = 30 }) => {
+export const Loader = ({ toHeight = 60 }) => {
   return (
     <div
       style={{ height: window.innerHeight - toHeight }}
