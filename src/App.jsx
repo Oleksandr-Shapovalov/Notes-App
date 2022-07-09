@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import NoteItemPage from "./pages/NoteItemPage";
-import NoteEditPage from "./pages/NoteEditPage";
+//import NoteEditPage from "./pages/NoteEditPage";
 import ConfirmDelete from "./components/confirmPopUp/ConfirmDelete.jsx";
 import { useDispatch } from "react-redux";
 import { toggleConfirmAC } from "./store/notes/notesActions";
 import ThemeToggle from "./components/themeToggle/ThemeToggle";
+import { Loader } from "./components/loader/Loader";
 
+const NoteEditPage = React.lazy(() => import("./pages/NoteEditPage"));
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -45,7 +47,14 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/note/:id" element={<NoteItemPage />} />
-          <Route path="/note/edit/:id" element={<NoteEditPage />} />
+          <Route
+            path="/note/edit/:id"
+            element={
+              <Suspense fallback={<Loader />}>
+                <NoteEditPage />
+              </Suspense>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
