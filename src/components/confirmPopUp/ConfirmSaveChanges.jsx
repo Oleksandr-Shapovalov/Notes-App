@@ -4,7 +4,7 @@ import { useTouchMove } from "../../addition/customHooks";
 import style from "./Confirm.module.scss";
 export default memo(({ confirmNavigation, cancelNavigation, visibility }) => {
   const touch = useTouchMove();
-  console.log("rerender");
+
   return (
     <CSSTransition
       in={visibility}
