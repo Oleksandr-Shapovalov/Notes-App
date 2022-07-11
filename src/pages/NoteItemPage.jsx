@@ -12,7 +12,7 @@ const NoteItemPage = ({ navigate, isLoading, dispatch, chosenNote }) => {
       {isLoading ? (
         <Loader toHeight={60} />
       ) : (
-        <Note dispatch={dispatch} {...chosenNote} cb={navigate} />
+        <Note {...chosenNote} cb={navigate} />
       )}
     </div>
   );

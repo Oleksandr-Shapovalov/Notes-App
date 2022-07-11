@@ -26,7 +26,7 @@ export const Notes = () => {
               classNames="noteAnimation"
               timeout={{ enter: 700, exit: 950 }}
             >
-              <Note dispatch={dispatch} {...note} />
+              <Note {...note} />
             </CSSTransition>
           ))}
         </TransitionGroup>

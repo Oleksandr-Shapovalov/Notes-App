@@ -1,4 +1,5 @@
 import React, { memo, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTouchMove } from "../../addition/customHooks";
 import {
@@ -7,7 +8,8 @@ import {
 } from "../../store/notes/notesActions";
 import style from "./Notes.module.scss";
 
-export default memo(({ title, text, date, dispatch, id, edited }) => {
+export default memo(({ title, text, date, id, edited }) => {
+  const dispatch = useDispatch();
   const touch = useTouchMove();
   const popUp = useRef(null);
   const navigate = useNavigate();
